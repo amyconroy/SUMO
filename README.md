@@ -1,1 +1,1 @@
-# SUMO
+# SUMO: SUmmarisation with Majority Opinion
