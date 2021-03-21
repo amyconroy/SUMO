@@ -3,3 +3,8 @@
 /data
 /__pycache__
 .DS_Store
+/code/*.pickle
+/code/summarydata
+/code/data
+/code/__pycache__
+/code/.DS_Store
