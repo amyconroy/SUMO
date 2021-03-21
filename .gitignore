@@ -1,3 +1,5 @@
 *.pickle
 /summarydata
 /data
+/__pycache__
+.DS_Store
