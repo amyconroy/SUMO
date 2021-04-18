@@ -19,4 +19,5 @@ We show a signiﬁcant quantitative F1-score improvement in rhetorical role and 
 ### References
 
 Ray, O., Conroy, A., & Imansyah, R. (2020). Summarisation with Majority Opinion. 247-250. [https://doi.org/10.3233/FAIA200875](https://doi.org/10.3233/FAIA200875)
+
 Conroy, A., SUMO: A System for Automatically Summarising UK House of Lords (UKHL) Judgments using Majority Opinion. Master’s thesis, University of Bristol, Bristol, UK, 2020
