@@ -64,11 +64,11 @@ class pipeline():
         featureExtractor.featureExtractor(casenum)
         import ml
         ml.ml(casenum, True)
-        print("\n UKHL PIPELINE SUMMARIES: \n")
+        print("\n SUMO PIPELINE SUMMARIES: \n")
         import summary
         summary.summary(casenum)
         print("\n")
-        print("\n UKHL Summary Pipeline Complete.")
+        print("\n SUMO Summary Pipeline Complete.")
         
         
 pipeline = pipeline()
