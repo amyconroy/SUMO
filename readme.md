@@ -10,11 +10,11 @@ We show a signiﬁcant quantitative F1-score improvement in rhetorical role and 
 
 ### To-Do
 
--[] Refactor CRF labelling 
--[] Refactor the entities labelling in to individual files 
--[] HTML parser for new cases 
--[] Integrate the ASMO labeller 
--[] Replicate the Cue Phrases labels from Hachey and Grover
+- [ ] Refactor CRF labelling 
+- [ ] Refactor the entities labelling in to individual files 
+- [ ] HTML parser for new cases 
+- [ ] Integrate the ASMO labeller 
+- [ ] Replicate the Cue Phrases labels from Hachey and Grover
 
 ### References
 
