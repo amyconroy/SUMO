@@ -31,7 +31,7 @@ you will also need the following serialized models:
     crel.pickle
     
 once you have the above dependancies you will be able to run the pipeline by running this file: 
-    UKHLSummaryPipeline.py
+    SUMOPipeline.py
     
     TODO: 
         HTML parser for cases not in the corpus, need to do the verb group and cue phrase matching first - which 
