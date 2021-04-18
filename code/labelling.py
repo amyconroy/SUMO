@@ -160,7 +160,6 @@ class labelling():
         with open('summarydata/UKHL_'+casenum+'.csv','w', newline='')as outfile:
             fieldnames = ['sent id', 'provision ent', 'instrument ent', 'court ent', 'case name ent', 'citation bl ent', 'judge ent',
                           'loc ent', 'org ent', 'date ent', 'person ent']        
-
             writer = csv.DictWriter(outfile, fieldnames=fieldnames)
             writer.writeheader()
         
