@@ -66,6 +66,10 @@ class featureExtractor():
         self.judgename = []
         self.rhetlabel = []
         
+        # new cue phrases
+        
+        
+        
         # actual code
         print("Fetching entities")
         self.getEntities(casenum)
