@@ -53,12 +53,20 @@ THE NEW CUE PHRASES FEATURE WILL INCLUDE:
     tag (JJ, NN, VBN, IN, DT, JJ, CC, VBZ, RP, PRP, LS, -LRB-, -RRB-, NNP, VB, NNS, PRP$, CD, MD) - count per sentence
     head verb (first verb that appears)
     
+    see - https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
+    
 new cue phrases feature set ->
     
     count of dep = aux (per sentence)
     count of pos = AUX (per sentence)
     boolean of dep = aux (true or false per sentence)
     boolean of pos= AUX (true or false per sentence)
+    
+for the first verb in the sentence ->
+    tense
+    modality
+    dependency 
+    tag
 
 @author: amyconroy
 """
@@ -78,16 +86,28 @@ def cuePhrases():
     
     with open('data/UKHL_corpus.csv', 'r') as infile:
         reader = csv.DictReader(infile)
+        
+        verbDepList = []
+        verbTagList = []
+        verbTenseList = []
+        
+        tense = None 
+        verbDep = None
+        verbTag = None
+        
+        aspects = []
         for row in reader:
             y += 1 # keep count for writing to the file later
-            
-            firstVerb = False 
     
             text = row['text']
             doc = nlp(text)
             
-            modal(doc, nlp)
+            modalPosBool, modalDepBool, modalDepCount, modalPosCount = modal(doc, nlp) #modality of the entire sentence
             
+            # verb info for the entire sentence
+            verbDepList, verbTagList, verbTenseList, verbModal, tense, verbDep, verbTag = verb(doc, nlp, verbDepList, verbTagList, verbTenseList)
+            
+           # aspects = aspectsAnalytics(doc, nlp, aspects)
             
             
             
@@ -106,13 +126,69 @@ def modal(doc, nlp):
         if token.dep_ == "aux":
             modalDepCount += 1
             modalDepBool = 1 # true if found
-        print(nlp.vocab.morphology.tag_map[token.tag_])
-    print(modalPosBool)
-    print(modalPosCount)
-    print(modalDepCount)
-    print(modalDepBool)
-    print("\n")
+        
+    return modalPosBool, modalDepBool, modalDepCount, modalPosCount
+
+
+def verb(doc, nlp, verbDepList, verbTagList, verbTenseList):
+    firstVerb = False 
+    verbModal = 0
     
+    tense = None
+    verbModal = None
+    verbDep = None
+    verbTag = None
+    
+    for token in doc:
+                if firstVerb == False:
+                    if token.pos_ == "VERB":
+                        firstVerb = True
+                        tense = nlp.vocab.morphology.tag_map[token.tag_].get("Tense")
+                        
+                        if tense != "pres" and tense != "past":
+                            verbForm = nlp.vocab.morphology.tag_map[token.tag_].get("VerbForm")
+                            if verbForm == "inf": 
+                                tense = verbForm
+                                
+                        if tense not in verbTenseList: 
+                            verbTenseList.append(tense)
+                  
+                        verbDep = token.dep_
+                        if verbDep not in verbDepList:
+                            verbDepList.append(verbDep)
+                        
+                        verbTag = token.tag_
+                        if verbTag not in verbTagList:
+                            verbTagList.append(verbTag)
+                            
+                        # if modality
+                        if token.tag_ == "MD":
+                            verbModal = 1
+    
+    return verbDepList, verbTagList, verbTenseList, verbModal, tense, verbDep, verbTag
+
+# maybe use this logic for the aspect parsing? https://stackoverflow.com/questions/60967134/named-entity-recognition-in-aspect-opinion-extraction-using-dependency-rule-matc
+# using the logic from https://towardsdatascience.com/aspect-based-sentiment-analysis-using-spacy-textblob-4c8de3e0d2b9
+def aspectsAnalytics(doc, nlp, aspects):
+    
+    adjective = ''
+    target = ''
+    
+    for token in doc:
+        if token.dep_ == 'nsubj' and token.pos_ == 'NOUN':
+          target = token.text
+        if token.pos_ == 'ADJ':
+          prepend = ''
+          for child in token.children:
+            if child.pos_ != 'ADV':
+              continue
+            prepend += child.text + ' '
+          adjective = prepend + token.text
+          aspects.append({'aspect': target,
+                          'description': adjective})
+    print(aspects)
+    
+    return aspects
                     
 cuePhrases() 
     
